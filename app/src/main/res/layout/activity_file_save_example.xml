@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="eus.urbieta.datamanagement.InternalFileSaveExample">
+
+    <EditText
+        android:id="@+id/text_to_save"
+        style="@android:style/Widget.Material.EditText"
+        android:layout_width="291dp"
+        android:layout_height="152dp"
+        android:ems="10"
+        android:hint="write data"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.502" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:onClick="saveFile"
+        android:text="Save"
+        app:layout_constraintTop_toBottomOf="@+id/text_to_save"
+        android:layout_marginLeft="61dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="61dp" />
+
+    <Button
+        android:id="@+id/load_button"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:onClick="loadFile"
+        android:text="Load"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/text_to_save"
+        android:layout_marginRight="72dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="72dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INTERNAL FILE"
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="47dp" />
+</android.support.constraint.ConstraintLayout>
