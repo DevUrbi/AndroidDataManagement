@@ -1,7 +1,10 @@
 package eus.urbieta.datamanagement;
 
+import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.Permission;
+import java.util.jar.Manifest;
 
 public class ExternalFileSaveExample extends AppCompatActivity {
 
@@ -32,10 +36,10 @@ public class ExternalFileSaveExample extends AppCompatActivity {
     }
 
     private boolean hasWritePermission(){
-        return PermissionChecker.checkPermission( this, )
+        return PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
     private boolean isExtenalStorageWritable(){
-        return (Environment.MEDIA_MOUNTED.equals( Environment.getExternalStorageState() ) && );
+        return (Environment.MEDIA_MOUNTED.equals( Environment.getExternalStorageState() ) );
     }
 
     private boolean isExternalStorageReadble(){
@@ -43,20 +47,28 @@ public class ExternalFileSaveExample extends AppCompatActivity {
     }
 
     public void saveFile(View view) {
-        if( isExtenalStorageWritable()){
-            File textFile = new File( Environment.getExternalStorageDirectory(), FILENAME);
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream( textFile);
-                fileOutputStream.write( mText_to_save.getText().toString().getBytes() );
-                fileOutputStream.close();
-                mText_to_save.setText("");
-            } catch (java.io.IOException e) {
-                e.printStackTrace();
-                Toast.makeText( this, e.getMessage(), Toast.LENGTH_LONG ).show();
+        if( hasWritePermission() ) {
+            if (isExtenalStorageWritable()) {
+                File textFile = new File(Environment.getExternalStorageDirectory(), FILENAME);
+                try {
+                    FileOutputStream fileOutputStream = new FileOutputStream(textFile);
+                    fileOutputStream.write(mText_to_save.getText().toString().getBytes());
+                    fileOutputStream.close();
+                    mText_to_save.setText("");
+                } catch (java.io.IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(this, "Cannot write to external storage", Toast.LENGTH_LONG).show();
             }
         }
         else{
-            Toast.makeText( this, "Cannot write to external storage", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "App has not storage permission activated", Toast.LENGTH_LONG ).show();
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PackageManager.PERMISSION_GRANTED );
+
         }
     }
 
